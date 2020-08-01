@@ -32,7 +32,7 @@ router.get('/books', asyncHandler(async (req, res, next) => {
 }));
 
 //Shows the create new book form.
-router.get('books/new', asyncHandler(async (req, res, next) => {
+router.get('/books/new', asyncHandler(async (req, res, next) => {
     res.render('new')
 }));
 
@@ -40,7 +40,7 @@ router.get('books/new', asyncHandler(async (req, res, next) => {
 router.post('/', asyncHandler(async (req, res, next) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
-    res.render("/books" + newBookId);
+    res.redirect("/books/4");
 }));
 
 //Shows book detail form.
