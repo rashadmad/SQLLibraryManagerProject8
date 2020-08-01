@@ -26,28 +26,27 @@ router.get('/', asyncHandler(async (req, res, next) => {
 //Shows the full list of books.
 router.get('/books', asyncHandler(async (req, res, next) => {
   const books = await Books.findAll()
-  console.log(books)
     res.render('index', {
         booksToView: [...books]
     })
 }));
 
 //Shows the create new book form.
-router.get('/books/new', asyncHandler(async (req, res, next) => {
-    res.render('new-book')
+router.get('books/new', asyncHandler(async (req, res, next) => {
+    res.render('new')
 }));
 
 //Posts a new book to the database.
-router.post('/books/new', asyncHandler(async (req, res, next) => {
+router.post('/', asyncHandler(async (req, res, next) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
-    res.render("/books/" + newBookId);
+    res.render("/books" + newBookId);
 }));
 
 //Shows book detail form.
-router.get('/book_detail/:id', asyncHandler(async (request, response, next) => {
+router.get('/books/:id', asyncHandler(async (request, response, next) => {
     const selectedBook = await Books.findByPk(request.params.id)
-    response.render('book_detail', {
+    response.render('edit', {
         _booksToView: selectedBook,
         get booksToView() {
             return this._booksToView;
