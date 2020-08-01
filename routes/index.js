@@ -16,6 +16,7 @@ const asyncHandler = (cb) => {
     }
 }
 
+
 //Home route should redirect to the /books route.
 router.get('/', asyncHandler(async (req, res, next) => {
     res.redirect('/books');
