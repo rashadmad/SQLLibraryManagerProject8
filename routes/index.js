@@ -32,13 +32,14 @@ router.get('/books', asyncHandler(async (req, res, next) => {
 }));
 
 //Shows the create new book form.
-router.get('/books/new', asyncHandler(async (request, response, next) => {
-    response.render('new-book')
+router.get('/books/new', asyncHandler(async (req, res, next) => {
+    res.render('new-book')
 }));
 
 //Posts a new book to the database.
-router.post('/books/new', asyncHandler(async (request, response, next) => {
-    response.render('/book_detail' + book.id)
+router.post('/books/new', asyncHandler(async (req, res, next) => {
+    const newBook = await Books.create(req.body)
+    res.redirect('/book_detail/' + newBook.id)
 }));
 
 //Shows book detail form.
