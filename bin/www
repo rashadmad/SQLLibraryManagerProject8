@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+var app = require('../app');
+var debug = require('debug')('sequelize-with-express:server');
+var http = require('http');
+var sequelize = require('../models').sequelize; // import Sequelize
 
 /**
  * Module dependencies.
