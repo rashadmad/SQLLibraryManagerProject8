@@ -37,8 +37,7 @@ router.get('/books/new', asyncHandler(async (request, response, next) => {
 
 //Posts a new book to the database.
 router.post('/books/new', asyncHandler(async (request, response, next) => {
-    response.send("New Book has been created")
-    response.render('index')
+    response.render('/book_detail' + book.id)
 }));
 
 //Shows book detail form.
@@ -71,4 +70,5 @@ router.post('/books/:id', asyncHandler(async (request, response, next) => {
 router.post('/books/:id/delete', asyncHandler(async (request, response, next) => {
     response.render('index')
 }));
+
 module.exports = router;
