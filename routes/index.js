@@ -43,8 +43,9 @@ router.post('/books/new', asyncHandler(async (request, response, next) => {
 
 //Shows book detail form.
 router.get('/book_detail/:id', asyncHandler(async (request, response, next) => {
+    const selectedBook = await Books.findByPk(request.params.id)
     response.render('book_detail', {
-        _booksToView: books[request.params.id],
+        _booksToView: selectedBook,
         get booksToView() {
             return this._booksToView;
         },
