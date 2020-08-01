@@ -9,7 +9,8 @@ const asyncHandler = (cb) => {
           await cb(req,res,next);  
         }
         catch(err) {
-            res.render('./errors/error', {
+            res.status(500).send(error);
+            res.render('error', {
                 errors: err
             })
         }
@@ -39,7 +40,8 @@ router.get('/books/new', asyncHandler(async (req, res, next) => {
 //Posts a new book to the database.
 router.post('/books/new', asyncHandler(async (req, res, next) => {
     const newBook = await Books.create(req.body)
-    res.redirect('/book_detail/' + newBook.id)
+    const newBookId = await newBook.id
+    res.render("/books/" + newBookId);
 }));
 
 //Shows book detail form.

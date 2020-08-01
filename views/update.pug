@@ -2,7 +2,7 @@ doctype html
 head
   title= booksToView.title
   link(rel='stylesheet' href='/stylesheets/style.css')
-h1 New Book
+h1 Edit "#{booksToView.title}"
 form
   p
     label(for='title') Title
@@ -17,6 +17,9 @@ form
     label(for='year') Year
     input#year(name='year' type='text' value= booksToView.year)
   p
-    input(type='submit' value='Create New Book')
+    input(type='submit' value='Update Book')
+form(method='post' action='/books/8/delete' onsubmit="return confirm('Do you really want to delete this book?');")
   p
-    a.button(href='all_books.html') Cancel
+    a.button(href='/') Cancel
+  p
+    input(type='submit' value='Delete Book')
