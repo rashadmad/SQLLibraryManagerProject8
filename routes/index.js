@@ -17,7 +17,6 @@ const asyncHandler = (cb) => {
     }
 }
 
-
 //Home route should redirect to the /books route.
 router.get('/', asyncHandler(async (req, res, next) => {
     res.redirect('/books');
@@ -40,25 +39,19 @@ router.get('/books/new', asyncHandler(async (req, res, next) => {
 router.post('/books', asyncHandler(async (req, res, next) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
-    res.redirect("/books/" + newBookId);
+    res.redirect("/books/");
 }));
 
 //READ/UPDATE/DELETE Shows book detail form.
 router.get('/books/:id', asyncHandler(async (req, res, next) => {
     const selectedBook = await Books.findByPk(req.params.id)
     res.render('edit', {
-        _booksToView: selectedBook,
-        get booksToView() {
-            return this._booksToView;
-        },
-        set booksToView(value) {
-            this._booksToView = value;
-        },
+        booksToView: selectedBook
     })
 }));
 
 //UPDATE book info in the database.
-router.post('/:id/edit', asyncHandler(async (req, res, next) => {
+router.post('/books/:id', asyncHandler(async (req, res, next) => {
     const bookToBeUpdated = await Book.findByPk(req.params.id);
     await bookToBeUpdated.update(req.body);
     res.redirect('/books/' + req.params.id)
@@ -68,7 +61,7 @@ router.post('/:id/edit', asyncHandler(async (req, res, next) => {
 router.post('/books/:id/delete', asyncHandler(async (req, res, next) => {
     const bookToBeDeleted = await Books.findByPk(req.params.id)
     await bookToBeDeleted.destroy();
-    res.redirect('/')
+    res.redirect('/books')
 }));
 
 module.exports = router;
