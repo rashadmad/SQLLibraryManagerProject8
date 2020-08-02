@@ -3,7 +3,7 @@ head
   title= booksToView.title
   link(rel='stylesheet' href='/stylesheets/style.css')
 h1 Edit "#{booksToView.title}"
-form(action='/books/' + booksToView.id + '/edit', methods="post")
+form
   p
     label(for='title') Title
     input#title(name='title' type='text' value= booksToView.title)
@@ -18,6 +18,7 @@ form(action='/books/' + booksToView.id + '/edit', methods="post")
     input#year(name='year' type='text' value= booksToView.year)
   p
     input(type='submit' value='Update Book')
+form(method='post' action='/books/:id/delete' onsubmit="return confirm('Do you really want to delete this book?');")
   p
     a.button(href='/') Cancel
   p

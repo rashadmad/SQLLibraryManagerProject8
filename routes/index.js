@@ -23,7 +23,7 @@ router.get('/', asyncHandler(async (req, res, next) => {
     res.redirect('/books');
 }));
 
-//Shows the full list of books.
+//READ Shows the full list of books.
 router.get('/books', asyncHandler(async (req, res, next) => {
   const books = await Books.findAll()
     res.render('index', {
@@ -31,22 +31,22 @@ router.get('/books', asyncHandler(async (req, res, next) => {
     })
 }));
 
-//Shows the create new book form.
+//CREATE Shows the create new book form.
 router.get('/books/new', asyncHandler(async (req, res, next) => {
     res.render('new')
 }));
 
-//Posts a new book to the database.
+//CREATE Posts a new book to the database.
 router.post('/books', asyncHandler(async (req, res, next) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
     res.redirect("/books/" + newBookId);
 }));
 
-//Shows book detail form.
-router.get('/books/:id', asyncHandler(async (request, response, next) => {
-    const selectedBook = await Books.findByPk(request.params.id)
-    response.render('edit', {
+//READ/UPDATE/DELETE Shows book detail form.
+router.get('/books/:id', asyncHandler(async (req, res, next) => {
+    const selectedBook = await Books.findByPk(req.params.id)
+    res.render('edit', {
         _booksToView: selectedBook,
         get booksToView() {
             return this._booksToView;
@@ -57,22 +57,18 @@ router.get('/books/:id', asyncHandler(async (request, response, next) => {
     })
 }));
 
-//Updates book info in the database.
-router.post('/books/:id', asyncHandler(async (request, response, next) => {
-        response.render('book_detail', {
-        _booksToView: books[request.params.id],
-        get booksToView() {
-            return this._booksToView;
-        },
-        set booksToView(value) {
-            this._booksToView = value;
-        },
-    })
+//UPDATE book info in the database.
+router.post('/:id/edit', asyncHandler(async (req, res, next) => {
+    const bookToBeUpdated = await Book.findByPk(req.params.id);
+    await bookToBeUpdated.update(req.body);
+    res.redirect('/books/' + req.params.id)
 }));
 
-//Deletes a book. Careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting.
-router.post('/books/:id/delete', asyncHandler(async (request, response, next) => {
-    response.render('index')
+//DELETES a book. Careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting.
+router.post('/books/:id/delete', asyncHandler(async (req, res, next) => {
+    const bookToBeDeleted = await Books.findByPk(req.params.id)
+    await bookToBeDeleted.destroy();
+    res.redirect('/')
 }));
 
 module.exports = router;
