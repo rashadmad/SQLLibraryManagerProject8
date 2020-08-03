@@ -67,15 +67,15 @@ router.post('/:id/edit', asyncHandler(async (req, res) => {
 //show DELETE form to make sure users really wants to delete a book
 router.get('/:id/delete', asyncHandler(async (req, res) => {
     res.render('delete');
-    // const bookToBeDeleted = await Book.findByPk(req.params.id)
-    // if(bookToBeDeleted){
-    //     await book.update(req.body);
-    //     res.render('delete', { 
-    //         book: bookToBeDeleted 
-    //     })
-    // } else {
-    //     res.render('page_not_found');
-    // } 
+    const bookToBeDeleted = await Book.findByPk(req.params.id)
+    if(bookToBeDeleted){
+        await book.update(req.body);
+        res.render('delete', { 
+            book: bookToBeDeleted 
+        })
+    } else {
+        res.render('page_not_found');
+    } 
 }));
 
 //DELETES a book. Careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting.
