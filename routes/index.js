@@ -36,7 +36,6 @@ router.get('/books/new', asyncHandler(async (req, res) => {
 //CREATE Posts a new book to the database.
 router.post('/books/new', asyncHandler(async (req, res) => {
     const newBook = await Books.create(req.body)
-    const newBookId = await newBook.id
     res.redirect("/books/");
 }));
 
@@ -55,7 +54,7 @@ router.get('/books/:id', asyncHandler(async (req, res) => {
 
 //UPDATE book info in the database.
 router.post('/books/:id', asyncHandler(async (req, res) => {
-    const book = await Book.findByPk(req.params.id);
+    const book = await Books.findByPk(req.params.id);
     if(book){
         await book.update(req.body);
         res.redirect("/books/" + book.id)
@@ -66,7 +65,7 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
 
 //show DELETE form to make sure users really wants to delete a book
 router.get('/books/:id/delete', asyncHandler(async (req, res) => {
-    const bookToBeDeleted = await Book.findByPk(req.params.id)
+    const bookToBeDeleted = await Books.findByPk(req.params.id)
     if(bookToBeDeleted){
         res.render('delete', { 
             book: bookToBeDeleted 
