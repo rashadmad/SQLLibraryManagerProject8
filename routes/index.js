@@ -23,8 +23,7 @@ router.get('/books', asyncHandler(async (req, res) => {
   const books = await Books.findAll()
   const blankValue = " "
     res.render('index', {
-        booksToView: [...books],
-        book: {}
+        booksToView: [...books]
     })
 }));
 
@@ -67,7 +66,7 @@ router.post('/:id/edit', asyncHandler(async (req, res) => {
 }));
 
 //show DELETE form to make sure users really wants to delete a book
-router.get('/books/:id/delete', asyncHandler(async (req, res) => {
+router.get('/book/:id/delete', asyncHandler(async (req, res) => {
     const bookToBeDeleted = await Book.findByPk(req.params.id)
     if(bookToBeDeleted){
         await book.update(req.body);
@@ -80,13 +79,13 @@ router.get('/books/:id/delete', asyncHandler(async (req, res) => {
 }));
 
 //DELETES a book. Careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting.
-router.post('/books/:id/delete', asyncHandler(async (req, res) => {
+router.post('/book/:id/delete', asyncHandler(async (req, res) => {
     const bookToBeDeleted = await Books.findByPk(req.params.id)
     await bookToBeDeleted.destroy(req.body);
     res.redirect('/')
     if(bookToBeDeleted){
         await book.update(req.body);
-        res.render('books/delete', { 
+        res.render('book/delete', { 
             book: bookToBeDeleted 
         })
     } else {
