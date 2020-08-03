@@ -1,25 +1,14 @@
 doctype html
 head
-  title= booksToView.title
+  title= bookToBeDeleted.title
   link(rel='stylesheet' href='/stylesheets/style.css')
-h1 Edit "#{booksToView.title}"
-form
-  p
-    label(for='title') Title
-    input#title(name='title' type='text' value= booksToView.title)
-  p
-    label(for='author') Author
-    input#author(name='author' type='text' value= booksToView.author)
-  p
-    label(for='genre') Genre
-    input#genre(name='genre' type='text' value= booksToView.genre)
-  p
-    label(for='year') Year
-    input#year(name='year' type='text' value= booksToView.year)
-  p
-    input(type='submit' value='Update Book')
-form(method='post' action='/books/:id/delete' onsubmit="return confirm('Do you really want to delete this book?')")
-  p
-    a.button(href='/') Cancel
-  p
-    input(type='submit' value='Delete Book')
+h1 Edit "#{bookToBeDeleted.title}"
+  h2= title
+  p 
+    | Are you sure you want to delete 
+    em= bookToBeDeleted.title
+    | ?
+  form(action="/books/" + bookToBeDeleted.id + "/delete", method="post")
+    a(href="/books/" + bookToBeDeleted.id) No! Take me back! 
+    | 
+    input(type="submit", value = "Yes, I'm sure")

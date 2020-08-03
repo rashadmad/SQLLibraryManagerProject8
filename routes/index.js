@@ -51,17 +51,25 @@ router.get('/books/:id', asyncHandler(async (req, res, next) => {
 }));
 
 //UPDATE book info in the database.
-router.post('/books/:id', asyncHandler(async (req, res, next) => {
+router.post('/books/:id/edit', asyncHandler(async (req, res, next) => {
     const bookToBeUpdated = await Book.findByPk(req.params.id);
     await bookToBeUpdated.update(req.body);
-    res.redirect('/books/' + req.params.id, bookToBeUpdated)
+    res.redirect("/")
+}));
+
+//DELETE form to make sure users really wants to delete a book
+router.get('/books/:id/delete', asyncHandler(async (req, res, next) => {
+    const bookToBeDeleted = await Book.findByPk(req.params.id)
+    res.render('books/delete', { 
+        bookToBeDeleted 
+    })
 }));
 
 //DELETES a book. Careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting.
 router.post('/books/:id/delete', asyncHandler(async (req, res, next) => {
     const bookToBeDeleted = await Books.findByPk(req.params.id)
-    await bookToBeDeleted.destroy();
-    res.redirect('/books')
+    await bookToBeDeleted.destroy(req.body);
+    res.redirect('/')
 }));
 
 module.exports = router;

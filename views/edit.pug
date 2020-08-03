@@ -3,7 +3,7 @@ head
   title= booksToView.title
   link(rel='stylesheet' href='/stylesheets/style.css')
 h1 Edit "#{booksToView.title}"
-form(action='/books/' + booksToView.id, methods="post")
+form(action='/books/' + booksToView.id + '/delete', methods="post")
   p
     label(for='title') Title
     input#title(name='title' type='text' value= booksToView.title)
