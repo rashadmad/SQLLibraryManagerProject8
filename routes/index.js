@@ -3,19 +3,15 @@ var router = express.Router();
 const Books = require('../models').Book;  
 
 //modular async function to allow other functions async nature
-const asyncHandler = (cb) => {
-    return async (req,res,next) => {
-        try {
-          await cb(req,res,next);  
-        }
-        catch(err) {
-            res.status(500).send(error);
-            res.render('error', {
-                errors: err
-            })
-        }
+function asyncHandler(cb){
+    return async(req, res, next) => {
+      try {
+        await cb(req, res, next)
+      } catch(error){
+        res.status(500).send(error);
+      }
     }
-}
+  }
 
 //Home route should redirect to the /books route.
 router.get('/', asyncHandler(async (req, res, next) => {
@@ -47,9 +43,14 @@ router.post('/books', asyncHandler(async (req, res, next) => {
 //READ/UPDATE/DELETE Shows book detail form.
 router.get('/books/:id', asyncHandler(async (req, res, next) => {
     const selectedBook = await Books.findByPk(req.params.id)
-    res.render('edit', {
-        book: selectedBook
-    })
+    //need to check if the selected book exists 
+    if(selectedBook){
+        res.render('edit', {
+            book: selectedBook
+        })
+    } else {
+        res.sendStatus(404);
+    } 
 }));
 
 //UPDATE book info in the database.
