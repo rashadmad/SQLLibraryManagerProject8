@@ -37,7 +37,7 @@ router.get('/books/new', asyncHandler(async (req, res) => {
 router.post('/books/new', asyncHandler(async (req, res) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
-    res.redirect("/books/" + newBookId);
+    res.redirect("/books/");
 }));
 
 //READShows book detail form.
