@@ -1,6 +1,6 @@
-extends layout.pug
+extends partials/layout.pug
 
 block content
   h1 Edit "#{booksToView.title}"
   form(action='/books/' + booksToView.id + '/delete', methods="post")
-    include partials/form.pug
+    include partials/form.pug 
