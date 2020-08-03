@@ -29,19 +29,19 @@ router.get('/books', asyncHandler(async (req, res) => {
 }));
 
 //CREATE Shows the create new book form.
-router.get('/book/new', asyncHandler(async (req, res) => {
-    res.render('new')
+router.get('/books/new', asyncHandler(async (req, res) => {
+    res.render('new-book')
 }));
 
 //CREATE Posts a new book to the database.
-router.post('/book/', asyncHandler(async (req, res) => {
+router.post('/books/new', asyncHandler(async (req, res) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
-    res.redirect("/book/" + newBookId);
+    res.redirect("/books/" + newBookId);
 }));
 
 //READShows book detail form.
-router.get('/book/:id', asyncHandler(async (req, res) => {
+router.get('/books/:id', asyncHandler(async (req, res) => {
     const selectedBook = await Books.findByPk(req.params.id)
     //need to check if the selected book exists 
     if(selectedBook){
@@ -54,18 +54,18 @@ router.get('/book/:id', asyncHandler(async (req, res) => {
 }));
 
 //UPDATE book info in the database.
-router.post('/book/:id/delete', asyncHandler(async (req, res) => {
+router.post('/books/:id', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if(book){
         await book.update(req.body);
-        res.redirect("/book/" + book.id)
+        res.redirect("/books/" + book.id)
     } else {
         res.render('page_not_found');
     } 
 }));
 
 //show DELETE form to make sure users really wants to delete a book
-router.get('/book/:id/delete', asyncHandler(async (req, res) => {
+router.get('/books/:id/delete', asyncHandler(async (req, res) => {
     const bookToBeDeleted = await Book.findByPk(req.params.id)
     if(bookToBeDeleted){
         res.render('delete', { 

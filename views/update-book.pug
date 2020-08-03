@@ -2,5 +2,5 @@ extends partials/layout.pug
 
 block content
   h1 Edit "#{book.title}"
-  form(action='/book/' + book.id + '/delete', method="post")
+  form(action='/books/' + book.id + '/delete', method="post")
     include partials/form.pug 
