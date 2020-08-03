@@ -25,8 +25,10 @@ router.get('/', asyncHandler(async (req, res, next) => {
 //READ Shows the full list of books.
 router.get('/books', asyncHandler(async (req, res, next) => {
   const books = await Books.findAll()
+  const blankValue = " "
     res.render('index', {
-        booksToView: [...books]
+        booksToView: [...books],
+        book: {}
     })
 }));
 
@@ -39,21 +41,21 @@ router.get('/books/new', asyncHandler(async (req, res, next) => {
 router.post('/books', asyncHandler(async (req, res, next) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
-    res.redirect("/books/");
+    res.redirect("/books/" + newBookId);
 }));
 
 //READ/UPDATE/DELETE Shows book detail form.
 router.get('/books/:id', asyncHandler(async (req, res, next) => {
     const selectedBook = await Books.findByPk(req.params.id)
     res.render('edit', {
-        booksToView: selectedBook
+        book: selectedBook
     })
 }));
 
 //UPDATE book info in the database.
 router.post('/books/:id/edit', asyncHandler(async (req, res, next) => {
-    const bookToBeUpdated = await Book.findByPk(req.params.id);
-    await bookToBeUpdated.update(req.body);
+    const book = await Book.findByPk(req.params.id);
+    await book.update(req.body);
     res.redirect("/")
 }));
 
@@ -61,7 +63,7 @@ router.post('/books/:id/edit', asyncHandler(async (req, res, next) => {
 router.get('/books/:id/delete', asyncHandler(async (req, res, next) => {
     const bookToBeDeleted = await Book.findByPk(req.params.id)
     res.render('books/delete', { 
-        bookToBeDeleted 
+        book: bookToBeDeleted 
     })
 }));
 
