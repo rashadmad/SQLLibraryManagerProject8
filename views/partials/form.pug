@@ -12,7 +12,9 @@ if book
     label(for='year') Year
     input#year(name='year' type='text' value=book.year)
   p
-    input(type="submit" value='Create New Book')
+    input(type="submit" value='Update Book')
+  p
+    input(type="submit" value='Delete')
   p
     a.button(href='/') Cancel 
 else
@@ -29,6 +31,8 @@ else
     label(for='year') Year
     input#year(name='year' type='text')
   p
-    input(type="submit" value='Create New Book')
+    input(type="submit" value='create book')
+  p
+    input(type="submit" value='Delete')
   p
     a.button(href='/') Cancel 
