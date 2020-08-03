@@ -1,7 +1,6 @@
-doctype html
-head
-  title Error page
-  link(rel='stylesheet' href='/stylesheets/style.css')
+extends layout.pug
+
+block content
 h1 Server Error
 h2 #{errors.status}
 p #{errors.message}
