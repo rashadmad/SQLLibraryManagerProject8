@@ -12,9 +12,7 @@ if book
     label(for='year') Year
     input#year(name='year' type='text' value=book.year)
   p
-    a.button(href="/book/" + book.id + "/edit") Edit Book
-  p
-    a.button(href="/book/" + book.id + "/delete") Delete Book
+    input(type="submit" value='Delete book')
   p
     a.button(href='/') Cancel 
 else
@@ -32,7 +30,5 @@ else
     input#year(name='year' type='text')
   p
     input(type="submit" value='create book')
-  p
-    input(type="submit" value='Delete')
   p
     a.button(href='/') Cancel 
