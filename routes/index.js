@@ -1,4 +1,5 @@
 var express = require('express');
+const { render } = require('pug');
 var router = express.Router();
 const Books = require('../models').Book;  
 
@@ -33,14 +34,14 @@ router.get('/book/new', asyncHandler(async (req, res) => {
 }));
 
 //CREATE Posts a new book to the database.
-router.post('/book', asyncHandler(async (req, res) => {
+router.post('/book/', asyncHandler(async (req, res) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
     res.redirect("/book/" + newBookId);
 }));
 
 //READShows book detail form.
-router.get('/:id', asyncHandler(async (req, res) => {
+router.get('/book/:id', asyncHandler(async (req, res) => {
     const selectedBook = await Books.findByPk(req.params.id)
     //need to check if the selected book exists 
     if(selectedBook){
@@ -48,7 +49,8 @@ router.get('/:id', asyncHandler(async (req, res) => {
             book: selectedBook
         })
     } else {
-        res.sendStatus(404);
+        //res.sendStatus(404);
+        res.render('page_not_found');
     } 
 }));
 
@@ -61,7 +63,8 @@ router.post('/:id/edit', asyncHandler(async (req, res) => {
         await book.update(req.body);
         res.redirect("/")
     } else {
-        res.sendStatus(404);
+        //res.sendStatus(404);
+        res.render('page_not_found');
     } 
 }));
 
@@ -74,7 +77,8 @@ router.get('/book/:id/delete', asyncHandler(async (req, res) => {
             book: bookToBeDeleted 
         })
     } else {
-        res.sendStatus(404);
+        //res.sendStatus(404);
+        res.render('page_not_found');
     } 
 }));
 
@@ -89,7 +93,8 @@ router.post('/book/:id/delete', asyncHandler(async (req, res) => {
             book: bookToBeDeleted 
         })
     } else {
-        res.sendStatus(404);
+        //res.sendStatus(404);
+        res.render('page_not_found');
     } 
 }));
 
