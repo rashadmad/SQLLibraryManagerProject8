@@ -40,7 +40,7 @@ router.post('/books', asyncHandler(async (req, res, next) => {
     res.redirect("/books/" + newBookId);
 }));
 
-//READ/UPDATE/DELETE Shows book detail form.
+//READShows book detail form.
 router.get('/books/:id', asyncHandler(async (req, res, next) => {
     const selectedBook = await Books.findByPk(req.params.id)
     //need to check if the selected book exists 
@@ -58,14 +58,25 @@ router.post('/books/:id/edit', asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     await book.update(req.body);
     res.redirect("/")
+    if(book){
+        await book.update(req.body);
+        res.redirect("/")
+    } else {
+        res.sendStatus(404);
+    } 
 }));
 
-//DELETE form to make sure users really wants to delete a book
+//show DELETE form to make sure users really wants to delete a book
 router.get('/books/:id/delete', asyncHandler(async (req, res, next) => {
     const bookToBeDeleted = await Book.findByPk(req.params.id)
-    res.render('books/delete', { 
-        book: bookToBeDeleted 
-    })
+    if(bookToBeDeleted){
+        await book.update(req.body);
+        res.render('books/delete', { 
+            book: bookToBeDeleted 
+        })
+    } else {
+        res.sendStatus(404);
+    } 
 }));
 
 //DELETES a book. Careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting.
@@ -73,6 +84,14 @@ router.post('/books/:id/delete', asyncHandler(async (req, res, next) => {
     const bookToBeDeleted = await Books.findByPk(req.params.id)
     await bookToBeDeleted.destroy(req.body);
     res.redirect('/')
+    if(bookToBeDeleted){
+        await book.update(req.body);
+        res.render('books/delete', { 
+            book: bookToBeDeleted 
+        })
+    } else {
+        res.sendStatus(404);
+    } 
 }));
 
 module.exports = router;
