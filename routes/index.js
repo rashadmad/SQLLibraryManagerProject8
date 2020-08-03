@@ -45,7 +45,7 @@ router.get('/books/:id', asyncHandler(async (req, res) => {
     const selectedBook = await Books.findByPk(req.params.id)
     //need to check if the selected book exists 
     if(selectedBook){
-        res.render('edit', {
+        res.render('update-book', {
             book: selectedBook
         })
     } else {
