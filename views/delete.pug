@@ -1,13 +1,13 @@
 extends partials/layout.pug
 
 block content
-h1 Edit "#{bookToBeDeleted.title}"
+h1 Edit "#{book.title}"
   h2= title
   p 
     | Are you sure you want to delete 
-    em= bookToBeDeleted.title
+    em= book.title
     | ?
-  form(action="/books/" + bookToBeDeleted.id + "/delete", method="post")
-    a(href="/books/" + bookToBeDeleted.id) No! Take me back! 
+  form(action="/books/" + book.id + "/delete", method="post")
+    a(href="/books/" + book.id) No! Take me back! 
     | 
     input(type="submit", value = "Yes, I'm sure")
