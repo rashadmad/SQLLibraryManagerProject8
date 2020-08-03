@@ -14,12 +14,12 @@ function asyncHandler(cb){
   }
 
 //Home route should redirect to the /books route.
-router.get('/', asyncHandler(async (req, res, next) => {
+router.get('/', asyncHandler(async (req, res) => {
     res.redirect('/books');
 }));
 
 //READ Shows the full list of books.
-router.get('/books', asyncHandler(async (req, res, next) => {
+router.get('/books', asyncHandler(async (req, res) => {
   const books = await Books.findAll()
   const blankValue = " "
     res.render('index', {
@@ -29,19 +29,19 @@ router.get('/books', asyncHandler(async (req, res, next) => {
 }));
 
 //CREATE Shows the create new book form.
-router.get('/books/new', asyncHandler(async (req, res, next) => {
+router.get('/books/new', asyncHandler(async (req, res) => {
     res.render('new')
 }));
 
 //CREATE Posts a new book to the database.
-router.post('/books', asyncHandler(async (req, res, next) => {
+router.post('/books', asyncHandler(async (req, res) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
     res.redirect("/books/" + newBookId);
 }));
 
 //READShows book detail form.
-router.get('/books/:id', asyncHandler(async (req, res, next) => {
+router.get('/:id', asyncHandler(async (req, res) => {
     const selectedBook = await Books.findByPk(req.params.id)
     //need to check if the selected book exists 
     if(selectedBook){
@@ -54,7 +54,7 @@ router.get('/books/:id', asyncHandler(async (req, res, next) => {
 }));
 
 //UPDATE book info in the database.
-router.post('/books/:id/edit', asyncHandler(async (req, res, next) => {
+router.post('/:id/edit', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     await book.update(req.body);
     res.redirect("/")
@@ -67,7 +67,7 @@ router.post('/books/:id/edit', asyncHandler(async (req, res, next) => {
 }));
 
 //show DELETE form to make sure users really wants to delete a book
-router.get('/books/:id/delete', asyncHandler(async (req, res, next) => {
+router.get('/books/:id/delete', asyncHandler(async (req, res) => {
     const bookToBeDeleted = await Book.findByPk(req.params.id)
     if(bookToBeDeleted){
         await book.update(req.body);
@@ -80,7 +80,7 @@ router.get('/books/:id/delete', asyncHandler(async (req, res, next) => {
 }));
 
 //DELETES a book. Careful, this can’t be undone. It can be helpful to create a new “test” book to test deleting.
-router.post('/books/:id/delete', asyncHandler(async (req, res, next) => {
+router.post('/books/:id/delete', asyncHandler(async (req, res) => {
     const bookToBeDeleted = await Books.findByPk(req.params.id)
     await bookToBeDeleted.destroy(req.body);
     res.redirect('/')
