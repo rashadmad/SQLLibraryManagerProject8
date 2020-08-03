@@ -49,7 +49,6 @@ router.get('/book/:id', asyncHandler(async (req, res) => {
             book: selectedBook
         })
     } else {
-        //res.sendStatus(404);
         res.render('page_not_found');
     } 
 }));
@@ -63,7 +62,6 @@ router.post('/:id/edit', asyncHandler(async (req, res) => {
         await book.update(req.body);
         res.redirect("/")
     } else {
-        //res.sendStatus(404);
         res.render('page_not_found');
     } 
 }));
@@ -77,7 +75,6 @@ router.get('/book/:id/delete', asyncHandler(async (req, res) => {
             book: bookToBeDeleted 
         })
     } else {
-        //res.sendStatus(404);
         res.render('page_not_found');
     } 
 }));
@@ -93,7 +90,6 @@ router.post('/book/:id/delete', asyncHandler(async (req, res) => {
             book: bookToBeDeleted 
         })
     } else {
-        //res.sendStatus(404);
         res.render('page_not_found');
     } 
 }));
