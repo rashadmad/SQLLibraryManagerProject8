@@ -29,15 +29,15 @@ router.get('/books', asyncHandler(async (req, res) => {
 }));
 
 //CREATE Shows the create new book form.
-router.get('/books/new', asyncHandler(async (req, res) => {
+router.get('/book/new', asyncHandler(async (req, res) => {
     res.render('new')
 }));
 
 //CREATE Posts a new book to the database.
-router.post('/books', asyncHandler(async (req, res) => {
+router.post('/book', asyncHandler(async (req, res) => {
     const newBook = await Books.create(req.body)
     const newBookId = await newBook.id
-    res.redirect("/books/" + newBookId);
+    res.redirect("/book/" + newBookId);
 }));
 
 //READShows book detail form.
@@ -71,7 +71,7 @@ router.get('/books/:id/delete', asyncHandler(async (req, res) => {
     const bookToBeDeleted = await Book.findByPk(req.params.id)
     if(bookToBeDeleted){
         await book.update(req.body);
-        res.render('books/delete', { 
+        res.render('book/delete', { 
             book: bookToBeDeleted 
         })
     } else {
