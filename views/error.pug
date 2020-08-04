@@ -1,7 +1,6 @@
-extends partials/layout.pug
-
-block content
-  h1 Server Error
-  h2 #{errors.status}
-  p #{errors.message}
-  p #{errors.stack}
+if(errors)
+  h2.errors Oops an error occurred!
+  ul.errors
+    each error in errors
+      li
+        =error.message
