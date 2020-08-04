@@ -3,6 +3,9 @@ const { render } = require('pug');
 var router = express.Router();
 const Books = require('../models').Book;  
 
+
+
+
 //modular async function to allow other functions async nature
 function asyncHandler(cb){
     return async(req, res, next) => {
@@ -10,6 +13,7 @@ function asyncHandler(cb){
         await cb(req, res, next)
       } catch(error){
         res.status(500).send(error);
+        next(error)
       }
     }
   }
@@ -58,8 +62,7 @@ router.get('/books/:id', asyncHandler(async (req, res) => {
             book: selectedBook
         })
     } else {
-        res.send(404)
-        res.render('page_not_found');
+        res.sendStatus(404)
     } 
 }));
 
@@ -71,8 +74,7 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
             await book.update(req.body);
             res.redirect("/books/" + book.id)
         } else {
-            res.send(404)
-            res.render('page_not_found');
+            res.sendStatus(404)
         } 
     } catch (error) {
         if(error.name === "SequelizeValidationError") {
@@ -93,8 +95,7 @@ router.get('/books/:id/delete', asyncHandler(async (req, res) => {
             book: bookToBeDeleted 
         })
     } else {
-        res.send(404)
-        res.render('page_not_found');
+        res.sendStatus(404)
     } 
 }));
 
@@ -105,8 +106,7 @@ router.post('/books/:id/delete', asyncHandler(async (req, res) => {
         await bookToBeDeleted.destroy(req.body);
         res.redirect('/')
     } else {
-        res.send(404)
-        res.render('page_not_found');
+        res.sendStatus(404)
     } 
 }));
 
