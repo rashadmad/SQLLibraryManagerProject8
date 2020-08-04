@@ -22,7 +22,6 @@ router.get('/', asyncHandler(async (req, res) => {
 //READ Shows the full list of books.
 router.get('/books', asyncHandler(async (req, res) => {
   const books = await Books.findAll()
-  const blankValue = " "
     res.render('index', {
         booksToView: [...books]
     })
@@ -30,13 +29,15 @@ router.get('/books', asyncHandler(async (req, res) => {
 
 //CREATE Shows the create new book form.
 router.get('/books/new', asyncHandler(async (req, res) => {
-    res.render('new-book')
+    res.render('new-book', {
+        book: false
+    })
 }));
 
 //CREATE Posts a new book to the database.
 router.post('/books/new', asyncHandler(async (req, res) => {
     const newBook = await Books.create(req.body)
-    res.redirect("/books/");
+    res.redirect("/books/")
 }));
 
 //READShows book detail form.
