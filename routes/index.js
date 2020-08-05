@@ -3,9 +3,6 @@ const { render } = require('pug');
 var router = express.Router();
 const Books = require('../models').Book;  
 
-
-
-
 //modular async function to allow other functions async nature
 function asyncHandler(cb){
     return async(req, res, next) => {
@@ -13,6 +10,7 @@ function asyncHandler(cb){
         await cb(req, res, next)
       } catch(error){
         res.status(500).send(error);
+        res.render('index')
         next(error)
       }
     }
@@ -42,7 +40,7 @@ router.get('/books/new', asyncHandler(async (req, res) => {
 router.post('/books/new', asyncHandler(async (req, res) => {
         try {
             const newBook = await Books.create(req.body)
-            res.redirect("/books/")
+            res.redirect("/books/" + newBook.id)
         } catch (error) {
         if(error.name === "SequelizeValidationError") { // checking the error
             book = await Books.build(req.body);
