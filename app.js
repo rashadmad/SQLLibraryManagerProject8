@@ -34,7 +34,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   
   if(res.status === 404){
-    res.render(page_not_found)
+    res.render('page_not_found')
   }
   else {
   // render the error page
