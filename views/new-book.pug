@@ -3,7 +3,9 @@ extends partials/layout.pug
 block content
   h1 New Book
   form(action="/books/new", method="post")
-    if errors  
-      include error
+  if errors 
+    include partials/error.pug
+    include partials/form.pug 
+  else
     include partials/form.pug 
       
