@@ -37,7 +37,7 @@ router.get('/books/new', asyncHandler(async (req, res) => {
 //CREATE Posts a new book to the database.
 router.post('/books/new', asyncHandler(async (req, res) => {
     const newBook = await Books.create(req.body)
-    res.redirect("/books/")
+    res.redirect("/books/" + newBook.id)
 }));
 
 //READShows book detail form.
