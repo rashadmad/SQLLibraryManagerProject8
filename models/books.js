@@ -26,23 +26,11 @@ module.exports = (sequelize) => {
       },
       genre: {
           type: Sequelize.STRING,
-          allowNull: false,
-          validate: {
-              notEmpty: {
-                  // custom error message
-                  msg: 'Please provide a value for "genre"',
-              }
-           },
+          allowNull: true
       },
       year: {
           type: Sequelize.INTEGER,
-          allowNull: false,
-          validate: {
-              notEmpty: {
-                  // custom error message
-                  msg: 'Please provide a value for "year"',
-              }
-           },
+          allowNull: true
       },
   }, { sequelize }); // same as { sequelize: sequelize }
 
