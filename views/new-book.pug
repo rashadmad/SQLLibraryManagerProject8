@@ -4,6 +4,9 @@ block content
   h1 New Book
   if validationError
     include partials/form-error.pug
-  form(action="/books/new", method="post")
-    include partials/form.pug 
+    form(action="/books/new", method="post")
+      include partials/form.pug 
+  else
+    form(action="/books/new", method="post")
+      include partials/form.pug 
       
