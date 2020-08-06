@@ -1,5 +1,6 @@
 var express = require('express');
 const { render } = require('pug');
+const { response } = require('../app');
 var router = express.Router();
 const Books = require('../models').Book;  
 
@@ -43,10 +44,11 @@ router.post('/books/new', asyncHandler(async (req, res) => {
     } catch (error) {
       if(error.name === "SequelizeValidationError") {
         newBook = await Books.build(req.body);
-        res.render("/books/new/" + newBook.id, { 
+        res.status(400);
+        res.redirect("/books/new/", { 
             errors: error.errors,
             validationError: true
-        })
+         })
       } else {
         throw error;
       }  
