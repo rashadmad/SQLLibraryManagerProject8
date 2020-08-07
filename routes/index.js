@@ -31,7 +31,8 @@ router.get('/books', asyncHandler(async (req, res) => {
 //CREATE Shows the create new book form.
 router.get('/books/new', asyncHandler(async (req, res) => {
     res.render('new-book', {
-        book: false
+        book: false,
+        validationError: false
     })
 }));
 
@@ -44,11 +45,16 @@ router.post('/books/new', asyncHandler(async (req, res) => {
     } catch (error) {
       if(error.name === "SequelizeValidationError") {
         newBook = await Books.build(req.body);
+        console.log(req.body.genre)
         res.status(400);
         res.render('new-book', { 
             book: false,
             errors: error.errors,
-            validationError: true
+            validationError: true,
+            bookTitle: req.body.title,
+            bookAuthor: req.body.author,
+            bookGenre: req.body.genre,
+            bookYear: req.body.year
          })
       } else {
         throw error;
