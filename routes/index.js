@@ -1,5 +1,6 @@
 var express = require('express');
 const { render } = require('pug');
+const { response } = require('../app');
 var router = express.Router();
 const Books = require('../models').Book;  
 
@@ -32,24 +33,34 @@ router.get('/books', asyncHandler(async (req, res) => {
 //CREATE Shows the create new book form.
 router.get('/books/new', asyncHandler(async (req, res) => {
     res.render('new-book', {
-        book: false
+        book: false,
+        validationError: false
     })
 }));
 
 //CREATE Posts a new book to the database.
 router.post('/books/new', asyncHandler(async (req, res) => {
-        try {
-            const newBook = await Books.create(req.body)
-            res.redirect("/books/" + newBook.id, {
-                errors: false
-            })
-        } catch (error) {
-        if(error.name === "SequelizeValidationError") { // checking the error
-            book = await Books.build(req.body);
-            res.render("/books/new", { book, errors: error.errors})
-        } else {
-            throw error; // error caught in the asyncHandler's catch block
-        }  
+    let newBook;
+    try {
+      newBook = await Books.create(req.body);
+      res.redirect("/books/" + newBook.id)
+    } catch (error) {
+      if(error.name === "SequelizeValidationError") {
+        newBook = await Books.build(req.body);
+        console.log(req.body.genre)
+        res.status(400);
+        res.render('new-book', { 
+            book: false,
+            errors: error.errors,
+            validationError: true,
+            bookTitle: req.body.title,
+            bookAuthor: req.body.author,
+            bookGenre: req.body.genre,
+            bookYear: req.body.year
+         })
+      } else {
+        throw error;
+      }  
     }
 }));
 

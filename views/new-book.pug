@@ -2,10 +2,23 @@ extends partials/layout.pug
 
 block content
   h1 New Book
-  form(action="/books/new", method="post")
-  if errors 
-    include partials/error.pug
-    include partials/form.pug 
+  if validationError
+    h1 Validation error
+    if bookTitle === ""
+      p *please add a title
+    if bookAuthor === ""
+      p *please add an author
+    form(action="/books/new", method="post")
+      - var title = bookTitle
+      - var author = bookAuthor
+      - var genre = bookGenre
+      - var year = bookYear
+      include partials/form.pug 
   else
-    include partials/form.pug 
+    form(action="/books/new", method="post")
+      - var title = ''
+      - var author = ''
+      - var genre = ''
+      - var year = ''
+      include partials/form.pug 
       
