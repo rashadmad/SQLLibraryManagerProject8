@@ -92,9 +92,14 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
         if(error.name === "SequelizeValidationError") {
           book = await Books.build(req.body);
           bookId = req.params.id; // make sure correct article gets updated
-          res.redirect("/books/" + bookId, {
+          res.render("update-book", {
+             book,
              errors: error.errors,
-             validationError: true
+             validationError: true,
+             bookTitle: req.body.title,
+             bookAuthor: req.body.author,
+             bookGenre: req.body.genre,
+             bookYear: req.body.year
           })
         } else {
           throw error;

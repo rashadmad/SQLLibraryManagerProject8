@@ -1,9 +1,14 @@
 extends partials/layout.pug
 
 block content
-  h1 Edit "#{book.title}"
+  h1 Update Book
   if validationError
-  form(action="/books/" + book.id, method="post")
-      include partials/form.pug  
-
-    
+    h1 Validation error
+    if bookTitle === "" || bookAuthor === null
+      p *please add a title
+    if bookAuthor === "" || bookAuthor === null
+      p *please add an author
+    include partials/form.pug 
+  else
+    h1 Edit "#{book.title}"
+    include partials/form.pug  

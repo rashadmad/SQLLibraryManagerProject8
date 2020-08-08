@@ -3,10 +3,10 @@ extends partials/layout.pug
 block content
   h1 New Book
   if validationError
-    h1 Validation error
-    if bookTitle === ""
+    h1 Validation error 
+    if bookTitle === "" || bookAuthor === null
       p *please add a title
-    if bookAuthor === ""
+    if bookAuthor === "" || bookAuthor === null
       p *please add an author
     form(action="/books/new", method="post")
       - var title = bookTitle
