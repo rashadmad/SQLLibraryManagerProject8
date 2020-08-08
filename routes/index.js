@@ -47,7 +47,7 @@ router.post('/books/new', asyncHandler(async (req, res) => {
     } catch (error) {
       if(error.name === "SequelizeValidationError") {
         newBook = await Books.build(req.body);
-        console.log(req.body.genre)
+        console.log("SequelizeValidationError initiated")
         res.status(400);
         res.render('new-book', { 
             book: false,
@@ -79,19 +79,21 @@ router.get('/books/:id', asyncHandler(async (req, res) => {
 
 //UPDATE book info in the database.
 router.post('/books/:id', asyncHandler(async (req, res) => {
+    let book
     try {
-        const book = await Books.findByPk(req.params.id);
-        if(book){
+        book = await Books.findByPk(req.params.id);
+        if (book){
             await book.update(req.body);
             res.redirect("/books/" + book.id)
         } else {
-            res.render('page_not_found')
-        } 
+            res.sendStatus(404);
+        }
     } catch (error) {
         if(error.name === "SequelizeValidationError") {
           book = await Books.build(req.body);
-          book.id = req.params.id; // make sure correct article gets updated
-          res.render("articles/edit", { book, errors: error.errors, title: "Edit Article" })
+          bookId = req.params.id; // make sure correct article gets updated
+          res.redirect("/books/" + bookId)
+          res.sendStatus(404);
         } else {
           throw error;
         }
@@ -118,7 +120,7 @@ router.post('/books/:id/delete', asyncHandler(async (req, res) => {
         res.redirect('/')
     } else {
         res.render('page_not_found')
-        res.sendStatus(404)
+        res.status(404)
     } 
 }));
 

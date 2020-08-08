@@ -2,6 +2,13 @@ extends partials/layout.pug
 
 block content
   h1 Edit "#{book.title}"
-  include partials/form.pug 
+  if validationError
+    h1 Validation error
+    if bookTitle === ""
+      p *please add a title
+    if bookAuthor === ""
+      p *please add an author
+  form(action="/books/" + book.id, method="post")
+      include partials/form.pug  
 
     
