@@ -101,6 +101,7 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
              bookGenre: req.body.genre,
              bookYear: req.body.year
           })
+          res.sendStatus(501);
         } else {
           throw error;
         }
