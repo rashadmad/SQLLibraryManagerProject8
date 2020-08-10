@@ -24,7 +24,7 @@ app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.status(404).render('page_not_found')
+  res.status(404).render('page-not-found')
 });
 
 // error handler
@@ -35,7 +35,7 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     if(err.status === 404){
-      res.render('page_not_found');
+      res.render('page-not-found');
     } else {
       res.status(err.status || 500);
       res.render('error');
