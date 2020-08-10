@@ -73,7 +73,7 @@ router.get('/books/:id', asyncHandler(async (req, res) => {
             book: selectedBook
         })
     } else {
-        res.render('page_not_found')
+        res.sendStatus(404)
     } 
 }));
 
@@ -116,7 +116,7 @@ router.get('/books/:id/delete', asyncHandler(async (req, res) => {
             book: bookToBeDeleted 
         })
     } else {
-        res.render('page_not_found')
+        res.sendStatus(404)
     } 
 }));
 
@@ -127,8 +127,7 @@ router.post('/books/:id/delete', asyncHandler(async (req, res) => {
         await bookToBeDeleted.destroy(req.body);
         res.redirect('/')
     } else {
-        res.render('page_not_found')
-        res.status(404)
+        res.sendStatus(404)
     } 
 }));
 
