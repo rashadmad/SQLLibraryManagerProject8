@@ -73,7 +73,9 @@ router.get('/books/:id', asyncHandler(async (req, res) => {
             book: selectedBook
         })
     } else {
-        res.sendStatus(404)
+      const err = new Error("Page not found");
+      err.status = 404;
+      throw err;
     } 
 }));
 
@@ -86,7 +88,9 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
             await book.update(req.body);
             res.redirect("/books/" + book.id)
         } else {
-            res.sendStatus(404);
+          const err = new Error("Page not found");
+          err.status = 404;
+          throw err;
         }
     } catch (error) {
         if(error.name === "SequelizeValidationError") {
@@ -109,14 +113,16 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
 }));
 
 //show DELETE form to make sure users really wants to delete a book
-router.get('/books/:id/delete', asyncHandler(async (req, res) => {
+router.get('/books/:id/delete', asyncHandler(async (err, req, res) => {
     const bookToBeDeleted = await Books.findByPk(req.params.id)
     if(bookToBeDeleted){
         res.render('delete', { 
             book: bookToBeDeleted 
         })
     } else {
-        res.sendStatus(404)
+      const err = new Error("Page not found");
+      err.status = 404;
+      throw err;
     } 
 }));
 
@@ -127,7 +133,9 @@ router.post('/books/:id/delete', asyncHandler(async (req, res) => {
         await bookToBeDeleted.destroy(req.body);
         res.redirect('/')
     } else {
-        res.sendStatus(404)
+      const err = new Error("Page not found");
+      err.status = 404;
+      throw err;
     } 
 }));
 
