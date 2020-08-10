@@ -10,8 +10,8 @@ function asyncHandler(cb){
       try {
         await cb(req, res, next)
       } catch(error){
-        res.status(500).send(error);
-        res.render('index')
+        //res.status(500).send(error);
+        //res.render('index')
         next(error)
       }
     }
@@ -105,7 +105,7 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
              bookGenre: req.body.genre,
              bookYear: req.body.year
           })
-          res.sendStatus(422);
+          res.status(422);
         } else {
           throw error;
         }
