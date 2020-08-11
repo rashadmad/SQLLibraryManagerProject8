@@ -58,7 +58,6 @@ router.post('/books/new', asyncHandler(async (req, res) => {
             bookYear: req.body.year
          })
       } else {
-        res.status(500);
         throw error;
       }  
     }
@@ -73,8 +72,8 @@ router.get('/books/:id', asyncHandler(async (req, res) => {
             book: selectedBook
         })
     } else {
-      const err = new Error("Page not found");
-      err.status = 404;
+      const err = new Error("Book not found");
+      err.status = 422;
       throw err;
     } 
 }));
@@ -121,7 +120,6 @@ router.get('/books/:id/delete', asyncHandler(async (err, req, res) => {
         })
     } else {
       const err = new Error("Page not found");
-      err.status = 500;
       throw err;
     } 
 }));
@@ -134,7 +132,6 @@ router.post('/books/:id/delete', asyncHandler(async (req, res) => {
         res.redirect('/')
     } else {
       const err = new Error("Page not found");
-      err.status = 500;
       throw err;
     } 
 }));
